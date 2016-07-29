@@ -1,0 +1,6 @@
+('diags',
+ [{'fixits': <clang.cindex.FixItIterator instance at 0x10cbe2b90>,
+   'location': <SourceLocation file 'test_gen.cpp', line 20, column 10>,
+   'ranges': <clang.cindex.RangeIterator instance at 0x10cbe2b48>,
+   'severity': 4,
+   'spelling': "'stringstream' file not found"}])

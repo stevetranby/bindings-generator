@@ -89,6 +89,12 @@ public:
 
 	void doSomethingSimple();
 };
+
+typedef AnotherClass Steve;
+Steve smt;
+using SteveU = AnotherClass;
+SteveU smtU;
+
 };
 
 #endif

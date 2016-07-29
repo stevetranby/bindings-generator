@@ -115,7 +115,7 @@ def main():
     config.set('DEFAULT', 'jsbdir', jsb_root)
     config.set('DEFAULT', 'cxxgeneratordir', cxx_generator_root)
     config.set('DEFAULT', 'extra_flags', '')
-    
+
     if '3.5' in llvm_path:
         config.set('DEFAULT', 'clang_version', '3.5')
     elif '3.4' in llvm_path:
@@ -158,6 +158,8 @@ def main():
             cfg = '%s/%s' % (tojs_root, key)
             print 'Generating bindings for %s...' % (key[:-4])
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
+            print "Steve: command = "
+            print command
             _run_cmd(command)
 
         print '----------------------------------------'
