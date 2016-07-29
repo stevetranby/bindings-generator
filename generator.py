@@ -967,8 +967,8 @@ class NativeClass(object):
                     m.is_constructor = True
                     self.methods['constructor'] = m
             return True
-        # else:
-            # print >> sys.stderr, "unknown cursor: %s - %s" % (cursor.kind, cursor.displayname)
+        else:
+            print >> sys.stderr, "unknown cursor: %s - %s" % (cursor.kind, cursor.displayname)
         return False
 
 class Generator(object):
@@ -1013,6 +1013,10 @@ class Generator(object):
                     extend_clang_arg = clang_arg.replace("3.3", "3.4")
                     if os.path.exists(extend_clang_arg.replace("-I","")):
                         extend_clang_args.append(extend_clang_arg)
+                    else:
+                        extend_clang_arg = clang_arg.replace("3.3", "3.5")
+                        if os.path.exists(extend_clang_arg.replace("-I","")):
+                            extend_clang_args.append(extend_clang_arg)
 
         if len(extend_clang_args) > 0:
             self.clang_args.extend(extend_clang_args)
@@ -1202,7 +1206,9 @@ class Generator(object):
         self.impl_file.write(str(layout_c))
         self.doc_file.write(str(apidoc_ns_script))
 
+        print "Steve: parsing headers..."
         self._parse_headers()
+        print "Steve: parsed headers."
 
         layout_h = Template(file=os.path.join(self.target, "templates", "layout_foot.h"),
                             searchList=[self])
@@ -1210,6 +1216,7 @@ class Generator(object):
                             searchList=[self])
         self.head_file.write(str(layout_h))
         self.impl_file.write(str(layout_c))
+
         if self.script_type == "lua":
             apidoc_ns_foot_script = Template(file=os.path.join(self.target, "templates", "apidoc_ns_foot.script"),
                                 searchList=[self])
@@ -1544,6 +1551,8 @@ def main():
                 'cpp_headers': config.get(s, 'cpp_headers', 0, dict(userconfig.items('DEFAULT'))).split(' ') if config.has_option(s, 'cpp_headers') else None,
                 'win32_clang_flags': (config.get(s, 'win32_clang_flags', 0, dict(userconfig.items('DEFAULT'))) or "").split(" ") if config.has_option(s, 'win32_clang_flags') else None
                 }
+            print gen_opts
+            print "Steve---"
             generator = Generator(gen_opts)
             generator.generate_code()
 
